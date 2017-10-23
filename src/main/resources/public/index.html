@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="lucene-demo">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Lucene demo</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/bootstrap.js"></script>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-controller="BaseController" class="container">
+<br/>
+<div class="row">
+    <form name="searchForm" class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
+            <label class="radio-inline" ng-repeat="type in queryTypes">
+                <input type="radio" name="queryType" ng-value="type" ng-model="request.type"> {{type}}
+            </label>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control input-lg" ng-model="request.term">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-info btn-lg" ng-click="search(true)">Search</button>
+        </div>
+    </form>
+</div>
+<div ng-show="documents.length > 0">
+    <div style="border-bottom: 2px solid darkslategray; margin: 15px 0px 5px 0px; color: firebrick;">
+        Find {{request.index}} of {{total}}
+    </div>
+    <div class="panel panel-info" ng-repeat="doc in documents">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a role="button" ng-click="detail(doc)"><span ng-bind-html="doc.title | trusted"></span> ({{doc.length}})</a></h3>
+        </div>
+        <div class="panel-body">
+            <a role="button" ng-click="detail(doc)">
+                <span ng-bind-html="doc.content | trusted"></span>
+                &nbsp;...
+            </a>
+        </div>
+    </div>
+    <div ng-if="request.index < total"><a role="button" ng-click="search()">Load More</a></div>
+</div>
+<div>
+</div>
+</body>
+</html>
